@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "j8-gr-branch-gr-ub.fullname" . }}
+  labels:
+    {{- include "j8-gr-branch-gr-ub.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "j8-gr-branch-gr-ub.selectorLabels" . | nindent 4 }}

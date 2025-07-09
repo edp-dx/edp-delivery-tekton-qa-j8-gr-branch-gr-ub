@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "j8-gr-branch-gr-ub.fullname" . }}-test-connection"
+  labels:
+    {{- include "j8-gr-branch-gr-ub.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test-success
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "j8-gr-branch-gr-ub.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
